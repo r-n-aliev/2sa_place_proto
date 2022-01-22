@@ -1,10 +1,10 @@
 /* Always set the map height explicitly to define the size of the div
        * element that contains the map. */
 #map {
-    height: 90%;
-    width: 80%;
-    padding: 5% 10%;
-    position: static !important;
+    /*height: 90%;*/
+    /*width: 80%;*/
+    padding: 20%; /*it controls height of the map! don't ask me why %/  */
+    /*position: static !important;*/
 }
 
 /* Optional: Makes the sample page fill the window. */

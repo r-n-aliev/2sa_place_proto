@@ -43,12 +43,17 @@ function initMap() {
     // });
 }
 
+/**
+ * Добавляет событие на карту
+ * @param latLng координата
+ * @param eventType тип метки
+ */
 function addPoint(latLng, eventType) {
 
     const icon = {
         // https://dev.w3.org/SVG/tools/svgweb/samples/svg-files/osi.svg
         url: getUrlIconByEventType(eventType),
-        anchor: new google.maps.Point(0, 0),
+        anchor: new google.maps.Point(20, 20),
         scaledSize: new google.maps.Size(25, 25)
     };
 
@@ -56,12 +61,26 @@ function addPoint(latLng, eventType) {
     const marker = new google.maps.Marker({
         position: latLng,
         map: map,
-        title: "Conversation club",
-        label: "ConvClub",
-        opacity: 0.8,
+        title: "Тип события:" + eventType,
+        label: eventType,
+        opacity: 0.9,
         draggable: false,
         icon: icon,
         zIndex: -20
+    });
+    // google.maps.event.addListener(marker, 'click', function (event) {
+    marker.addListener('click', function (event) {
+        // https://developers.google.com/maps/documentation/javascript/reference/info-window#InfoWindowOptions
+        console.log(" Здесь должна быть ссылка на событие и вообще красивая плашка рядом. А пока вот:" + event);
+        infoWindowOptions.open(infoWindowOpenOptions) // !
+    });
+    let infoWindowOptions = new google.maps.InfoWindowOptions({
+        content: "<html><body><p>Ссылка на событие:</p><a href='https://t.me/+89A4Bf-g2aowOTMy'/> </body></html>",
+        pixelOffset: {width: 30, height: 30},
+
+    });
+    let infoWindowOpenOptions = new google.maps.InfoWindowOpenOptions({
+        anchor: marker
     });
 }
 

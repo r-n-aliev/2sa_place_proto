@@ -1,6 +1,6 @@
 let map;
 const MAP_ID = "f9b1b1bd509cc691";
-const MAP_VIEW_CENTER = {lat: 55.743591, lng: 37.742944};
+const MAP_VIEW_CENTER = {lat: 55.81200263720822, lng: 37.909069270225} // {lat: 55.743591, lng: 37.742944};
 
 /**
  * This func is callback when map is loaded (see index.html)
@@ -13,29 +13,71 @@ function initMap() {
     });
 
     // TODO get points from https://4dd47923-1394-48c9-b0c6-0194682c6508.mock.pstmn.io/2sa/places
-    addPoint({latLng : MAP_VIEW_CENTER})
+    addPoint(MAP_VIEW_CENTER)
+    // =============
+    const pointsJsonByRest = {
+        "points": [
+            {
+                "lat": 55.81200263720822,
+                "long": 37.909069270225,
+                "type": "debate"
+            },
+            {
+                "lat": 55.82996265856249,
+                "long": 37.89585469749168,
+                "type": "barbecue"
+            }
+        ]
+    }
+    for (let point of pointsJsonByRest.points) {
+        addPoint(
+            new google.maps.LatLng(point.lat, point.long),
+            point.type
+        )
+    }
+    // =============
 
     // todo del
-    google.maps.event.addListener(map, 'click', function (event) {
-        addPoint(event);
-    });
+    // google.maps.event.addListener(map, 'click', function (event) {
+    //     addPoint(event);
+    // });
 }
 
-function addPoint(event) {
+function addPoint(latLng, eventType) {
 
     const icon = {
-        url: "https://dev.w3.org/SVG/tools/svgweb/samples/svg-files/osi.svg",
-        anchor: new google.maps.Point(25, 50),
-        scaledSize: new google.maps.Size(10, 10)
+        // https://dev.w3.org/SVG/tools/svgweb/samples/svg-files/osi.svg
+        url: getUrlIconByEventType(eventType),
+        anchor: new google.maps.Point(0, 0),
+        scaledSize: new google.maps.Size(25, 25)
     };
 
+    // https://developers.google.com/maps/documentation/javascript/reference/marker#MarkerOptions
     const marker = new google.maps.Marker({
-        position: event.latLng,
+        position: latLng,
         map: map,
+        title: "Conversation club",
+        label: "ConvClub",
+        opacity: 0.8,
         draggable: false,
         icon: icon,
         zIndex: -20
     });
+}
+
+function getUrlIconByEventType(eventType) {
+    switch (eventType) {
+        case "trip" :
+        case "nature" :
+        case "picnic" :
+            return "https://raw.githubusercontent.com/r-n-aliev/2sa_place_proto/r-n-aliev-patch-1/files/svg/location-mountains.svg" //"barbecue"
+        case "debate":
+        case "club":
+        case "cafe":
+            return "https://raw.githubusercontent.com/r-n-aliev/2sa_place_proto/r-n-aliev-patch-1/files/svg/location-tea.svg"
+        default:
+            return "https://raw.githubusercontent.com/r-n-aliev/2sa_place_proto/r-n-aliev-patch-1/files/svg/location-default.svg"
+    }
 }
 
 //

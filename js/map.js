@@ -72,16 +72,15 @@ function addPoint(latLng, eventType) {
     marker.addListener('click', function (event) {
         // https://developers.google.com/maps/documentation/javascript/reference/info-window#InfoWindowOptions
         console.log(" Здесь должна быть ссылка на событие и вообще красивая плашка рядом. А пока вот:" + event);
-        infoWindowOptions.open(infoWindowOpenOptions) // !
+        infoWindowOptions.open({anchor: marker}) // !
     });
     let infoWindowOptions = new google.maps.InfoWindowOptions({
         content: "<html><body><p>Ссылка на событие:</p><a href='https://t.me/+89A4Bf-g2aowOTMy'/> </body></html>",
         pixelOffset: {width: 30, height: 30},
 
     });
-    let infoWindowOpenOptions = new google.maps.InfoWindowOpenOptions({
-        anchor: marker
-    });
+    // let infoWindowOpenOptions = {anchor: marker}//new google.maps.InfoWindowOpenOptions(
+
 }
 
 function getUrlIconByEventType(eventType) {

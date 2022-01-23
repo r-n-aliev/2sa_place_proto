@@ -1,5 +1,6 @@
 let map;
 const MAP_ID = "f9b1b1bd509cc691";
+const PLACES_API_URL = "https://4dd47923-1394-48c9-b0c6-0194682c6508.mock.pstmn.io/2sa/places";
 const MAP_VIEW_CENTER = {lat: 55.81200263720822, lng: 37.909069270225} // {lat: 55.743591, lng: 37.742944};
 
 /**
@@ -11,36 +12,16 @@ function initMap() {
         center: MAP_VIEW_CENTER,
         zoom: 15,
     });
+    _httpGetAsync(PLACES_API_URL, addEventsToMap)
+}
 
-    // TODO get points from https://4dd47923-1394-48c9-b0c6-0194682c6508.mock.pstmn.io/2sa/places
-    addPoint(MAP_VIEW_CENTER)
-    // =============
-    const pointsJsonByRest = {
-        "points": [
-            {
-                "lat": 55.81200263720822,
-                "long": 37.909069270225,
-                "type": "debate"
-            },
-            {
-                "lat": 55.82996265856249,
-                "long": 37.89585469749168,
-                "type": "barbecue"
-            }
-        ]
-    }
-    for (let point of pointsJsonByRest.points) {
+function addEventsToMap(apiResponse) {
+    for (let point of apiResponse.points) {
         addPoint(
             new google.maps.LatLng(point.lat, point.long),
             point.type
         )
     }
-    // =============
-
-    // todo del
-    // google.maps.event.addListener(map, 'click', function (event) {
-    //     addPoint(event);
-    // });
 }
 
 /**
@@ -51,10 +32,10 @@ function initMap() {
 function addPoint(latLng, eventType) {
 
     const icon = {
-        // https://dev.w3.org/SVG/tools/svgweb/samples/svg-files/osi.svg
         url: getUrlIconByEventType(eventType),
         anchor: new google.maps.Point(20, 20),
-        scaledSize: new google.maps.Size(25, 25)
+        scaledSize: new google.maps.Size(25, 25),
+        labelOrigin: new google.maps.Point(10, 10)
     };
 
     // https://developers.google.com/maps/documentation/javascript/reference/marker#MarkerOptions
@@ -68,21 +49,17 @@ function addPoint(latLng, eventType) {
         icon: icon,
         zIndex: -20
     });
-    // google.maps.event.addListener(marker, 'click', function (event) {
-    marker.addListener('click', function (event) {
-        // https://developers.google.com/maps/documentation/javascript/reference/info-window#InfoWindowOptions
-        console.log(" Здесь должна быть ссылка на событие и вообще красивая плашка рядом. А пока вот:" + event);
-        infoWindow.open({anchor: marker}) // !
+    // https://developers.google.com/maps/documentation/javascript/reference/info-window#InfoWindowOptions
+    marker.addListener('click', function () {
+        infoWindow.open({anchor: marker})
     });
     let infoWindow = new google.maps.InfoWindow({
-        content: "<html><body><p>Ссылка на событие:</p><a href='https://t.me/+89A4Bf-g2aowOTMy'/> </body></html>",
+        content: "<html lang=\"ru\"><body><p>Ссылка на событие:</p><a href='https://t.me/+89A4Bf-g2aowOTMy'>в Telegram</a></body></html>",
         pixelOffset: {width: 30, height: 30},
-
     });
-    // let infoWindowOpenOptions = {anchor: marker}//new google.maps.InfoWindowOpenOptions(
-
 }
 
+// Util functions below -------------------
 function getUrlIconByEventType(eventType) {
     switch (eventType) {
         case "trip" :
@@ -95,27 +72,16 @@ function getUrlIconByEventType(eventType) {
             return "https://raw.githubusercontent.com/r-n-aliev/2sa_place_proto/r-n-aliev-patch-1/files/svg/location-tea.svg"
         default:
             return "https://raw.githubusercontent.com/r-n-aliev/2sa_place_proto/r-n-aliev-patch-1/files/svg/location-default.svg"
+        // return "https://dev.w3.org/SVG/tools/svgweb/samples/svg-files/osi.svg"
     }
 }
 
-//
-// // ------ Adding marker
-//
-// function initialize() {
-//
-//     // var mapOptions = {
-//     //     zoom: 5,
-//     //     mapTypeId: google.maps.MapTypeId.ROADMAP,
-//     //     center: new google.maps.LatLng(0,0)
-//     // };
-//     //
-//     // map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
-//     //
-//     // google.maps.event.addListener(map, 'click', function(event) {
-//     //     addPoint(event);
-//     // });
-// }
-
-
-// initialize();
-
+function _httpGetAsync(theUrl, callback) {
+    let xmlHttp = new XMLHttpRequest();
+    xmlHttp.onreadystatechange = function () {
+        if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
+            callback(xmlHttp.responseText);
+    }
+    xmlHttp.open("GET", theUrl, true); // true for asynchronous
+    xmlHttp.send(null);
+}

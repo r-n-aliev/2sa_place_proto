@@ -10,7 +10,7 @@ function initMap() {
     map = new google.maps.Map(document.getElementById("map"), {
         mapId: MAP_ID,
         center: MAP_VIEW_CENTER,
-        zoom: 15,
+        zoom: 12,
     });
 
     getCurrentLocationAndSetAsTheMiddleOfMap()
@@ -46,8 +46,8 @@ function addPoint(latLng, eventType) {
     const marker = new google.maps.Marker({
         position: latLng,
         map: map,
-        title: "Тип события:" + eventType,
-        label: eventType,
+        title: eventType, // "Тип события:"
+        // label: eventType,
         opacity: 0.9,
         draggable: false,
         icon: icon,
@@ -58,7 +58,7 @@ function addPoint(latLng, eventType) {
         infoWindow.open({anchor: marker})
     });
     let infoWindow = new google.maps.InfoWindow({
-        content: "<html lang=\"ru\"><body><p>Ссылка на событие:</p><a href='https://t.me/+89A4Bf-g2aowOTMy'>в Telegram</a></body></html>",
+        content: "<html lang=\"ru\"><body><b>" + eventType + "</b><p>Ссылка на событие:</p><a href='https://t.me/+89A4Bf-g2aowOTMy'>в Telegram</a></body></html>",
         pixelOffset: {width: 30, height: 30},
     });
 }
@@ -82,7 +82,7 @@ function getUrlIconByEventType(eventType) {
     }
 }
 
-function getCurrentLocationAndSetAsTheMiddleOfMap(){
+function getCurrentLocationAndSetAsTheMiddleOfMap() {
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function (position) {
             let initialLocation = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);

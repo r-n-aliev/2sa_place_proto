@@ -38,7 +38,7 @@ function addPoint(latLng, eventType) {
     const icon = {
         url: getUrlIconByEventType(eventType),
         anchor: new google.maps.Point(20, 20),
-        scaledSize: new google.maps.Size(25, 25),
+        scaledSize: new google.maps.Size(25, 25), // для всех один размер? хм
         labelOrigin: new google.maps.Point(10, 10)
     };
 
@@ -66,6 +66,8 @@ function addPoint(latLng, eventType) {
 // Util functions below -------------------
 function getUrlIconByEventType(eventType) {
     switch (eventType) {
+        case "me" :
+            return "https://raw.githubusercontent.com/r-n-aliev/2sa_place_proto/r-n-aliev-patch-1/files/svg/location-star.svg"
         case "trip" :
         case "nature" :
         case "picnic" :
@@ -86,7 +88,10 @@ function getCurrentLocationAndSetAsTheMiddleOfMap(){
             let initialLocation = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
             console.log(">>> initialLocation = " + initialLocation)
             map.setCenter(initialLocation);
+
+            addPoint(initialLocation, MARKER_TYPE_ME)
         });
+
     }
 }
 
@@ -99,3 +104,5 @@ function _httpGetAsync(theUrl, callback) {
     xmlHttp.open("GET", theUrl, true); // true for asynchronous
     xmlHttp.send(null);
 }
+
+const MARKER_TYPE_ME = "me"

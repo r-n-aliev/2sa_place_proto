@@ -58,7 +58,7 @@ function addPoint(latLng, eventType) {
         infoWindow.open({anchor: marker})
     });
     let infoWindow = new google.maps.InfoWindow({
-        content: "<html lang=\"ru\"><body><b>" + eventType + "</b><p>Ссылка на событие:</p><a href='https://t.me/+89A4Bf-g2aowOTMy'>в Telegram</a></body></html>",
+        content: "<html lang=\"ru\"><body><b><i>" + eventType + "</i></b><p>Обсудить событие</p><a href='https://t.me/+89A4Bf-g2aowOTMy' target='_blank' rel='noopener noreferrer'>в Telegram</a></body></html>",
         pixelOffset: {width: 30, height: 30},
     });
 }

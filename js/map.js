@@ -12,6 +12,9 @@ function initMap() {
         center: MAP_VIEW_CENTER,
         zoom: 15,
     });
+
+    getCurrentLocationAndSetAsTheMiddleOfMap()
+
     _httpGetAsync(PLACES_API_URL, addEventsToMap)
 }
 
@@ -74,6 +77,16 @@ function getUrlIconByEventType(eventType) {
         default:
             return "https://raw.githubusercontent.com/r-n-aliev/2sa_place_proto/r-n-aliev-patch-1/files/svg/location-default.svg"
         // return "https://dev.w3.org/SVG/tools/svgweb/samples/svg-files/osi.svg"
+    }
+}
+
+function getCurrentLocationAndSetAsTheMiddleOfMap(){
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function (position) {
+            let initialLocation = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+            console.log(">>> initialLocation = " + initialLocation)
+            map.setCenter(initialLocation);
+        });
     }
 }
 

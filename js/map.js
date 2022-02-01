@@ -1,4 +1,5 @@
 let map;
+const HAL_EMBEDDED_FIELD = "_embedded";
 const MAP_ID = "f9b1b1bd509cc691";
 // "https://4dd47923-1394-48c9-b0c6-0194682c6508.mock.pstmn.io/2sa/places";
 const PLACES_API_URL = "https://glacial-garden-00674.herokuapp.com/places";
@@ -21,7 +22,7 @@ function initMap() {
 
 function addEventsToMap(apiResponse) {
     let json = JSON.parse(apiResponse)
-    for (let point of json.places) {
+    for (let point of json[HAL_EMBEDDED_FIELD].places) {
         addPoint(
             new google.maps.LatLng(point.latitude, point.longitude),
             point.type

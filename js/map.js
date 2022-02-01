@@ -1,7 +1,8 @@
 let map;
 const MAP_ID = "f9b1b1bd509cc691";
-const PLACES_API_URL = "https://4dd47923-1394-48c9-b0c6-0194682c6508.mock.pstmn.io/2sa/places";
-const MAP_VIEW_CENTER = {lat: 55.81200263720822, lng: 37.909069270225} // {lat: 55.743591, lng: 37.742944};
+// "https://4dd47923-1394-48c9-b0c6-0194682c6508.mock.pstmn.io/2sa/places";
+const PLACES_API_URL = "https://glacial-garden-00674.herokuapp.com/places";
+const MAP_VIEW_CENTER = {latitude: 55.81200263720822, longitude: 37.909069270225} // {latitude: 55.743591, longitude: 37.742944};
 
 /**
  * This func is callback when map is loaded (see index.html)
@@ -22,7 +23,7 @@ function addEventsToMap(apiResponse) {
     let json = JSON.parse(apiResponse)
     for (let point of json.points) {
         addPoint(
-            new google.maps.LatLng(point.lat, point.long),
+            new google.maps.LatLng(point.latitude, point.longitude),
             point.type
         )
     }

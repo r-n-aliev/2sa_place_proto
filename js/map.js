@@ -21,7 +21,7 @@ function initMap() {
 
 function addEventsToMap(apiResponse) {
     let json = JSON.parse(apiResponse)
-    for (let point of json.points) {
+    for (let point of json.places) {
         addPoint(
             new google.maps.LatLng(point.latitude, point.longitude),
             point.type

@@ -39,7 +39,7 @@ function addPoint(latLng, eventType) {
 
     const icon = {
         url: getUrlIconByEventType(eventType),
-        anchor: new google.maps.Point(20, 20),
+        anchor: new google.maps.Point(5, 5),
         scaledSize: new google.maps.Size(25, 25), // для всех один размер? хм
         labelOrigin: new google.maps.Point(10, 10)
     };

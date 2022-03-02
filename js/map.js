@@ -11,7 +11,7 @@ const MAP_VIEW_CENTER = {latitude: 55.81200263720822, longitude: 37.909069270225
 function initMap() {
     map = new google.maps.Map(document.getElementById("map"), {
         mapId: MAP_ID,
-        // center: MAP_VIEW_CENTER,
+        center: MAP_VIEW_CENTER,
         zoom: 12,
     });
 

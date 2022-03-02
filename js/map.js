@@ -11,7 +11,7 @@ const MAP_VIEW_CENTER = {latitude: 55.81200263720822, longitude: 37.909069270225
 function initMap() {
     map = new google.maps.Map(document.getElementById("map"), {
         mapId: MAP_ID,
-        center: MAP_VIEW_CENTER,
+        // center: MAP_VIEW_CENTER,
         zoom: 12,
     });
 
@@ -87,7 +87,7 @@ function getUrlIconByEventType(eventType) {
 function getCurrentLocationAndSetAsTheMiddleOfMap() {
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function (position) {
-            if (!position) return // for example, when there wasn't given the <geolocation> permission for this site
+            if (!position || position.coords) return // for example, when there wasn't given the <geolocation> permission for this site
             let initialLocation = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
             console.log(">>> initialLocation = " + initialLocation)
             map.setCenter(initialLocation);

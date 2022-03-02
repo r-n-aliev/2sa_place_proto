@@ -87,7 +87,7 @@ function getUrlIconByEventType(eventType) {
 function getCurrentLocationAndSetAsTheMiddleOfMap() {
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function (position) {
-            if (!position || position.coords) return // for example, when there wasn't given the <geolocation> permission for this site
+            if (!position || !position.coords) return // for example, when there wasn't given the <geolocation> permission for this site
             let initialLocation = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
             console.log(">>> initialLocation = " + initialLocation)
             map.setCenter(initialLocation);

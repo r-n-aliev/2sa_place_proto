@@ -3,7 +3,7 @@ const HAL_EMBEDDED_FIELD = "_embedded";
 const MAP_ID = "f9b1b1bd509cc691";
 // "https://4dd47923-1394-48c9-b0c6-0194682c6508.mock.pstmn.io/2sa/places";
 const PLACES_API_URL = "https://glacial-garden-00674.herokuapp.com/places";
-const MAP_VIEW_CENTER = {latitude: 55.81200263720822, longitude: 37.909069270225} // {latitude: 55.743591, longitude: 37.742944};
+const MAP_VIEW_CENTER = new google.maps.LatLng(55.81200263720822, 37.909069270225) // {latitude: 55.81200263720822, longitude: 37.909069270225} // {latitude: 55.743591, longitude: 37.742944};
 
 /**
  * This func is callback when map is loaded (see index.html)
